@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# 大型模型文件
+models/lid.176.bin
+
 # C extensions
 *.so
 
