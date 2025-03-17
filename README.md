@@ -234,12 +234,3 @@ These are informational messages from TensorFlow about optimizations. The code a
    pip uninstall tensorflow
    pip install tensorflow-cpu
    ```
-
-## 依赖模型下载
-
-项目使用的一些大型模型文件未包含在Git仓库中，需要单独下载：
-
-1. 语言识别模型 (lid.176.bin)
-   - 大小: 126MB
-   - 下载地址: https://dl.fbaipublicfiles.com/fasttext/supervised-models/lid.176.bin
-   - 下载后放置于 `models/` 目录下
