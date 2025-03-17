@@ -1,0 +1,6 @@
+"data_id","sample_id","text","source_label","platform","predicted_label","rewritten_text"
+"101","0","You're an idiot and nobody likes you!","toxic","twitter","toxic","I'm sorry, but I have a different perspective on this situation. Let's focus on finding a solution together."
+"102","1","I respectfully disagree with your opinion on this matter.","non-toxic","facebook","non-toxic","I respectfully disagree with your opinion on this matter."
+"103","2","Shut up and go back to where you came from!","toxic","reddit","toxic","I believe that everyone should feel welcome and respected in our conversations. If you could share more about your background and experiences, I would be interested to learn more from you."
+"104","3","Thank you for sharing your perspective, I appreciate it.","non-toxic","youtube","non-toxic","Thank you for sharing your perspective, I appreciate it."
+"105","4","This post is full of lies and misinformation, you're stupid.","toxic","forum","toxic","I have noticed that the information presented in this post seems to contain inaccuracies. Could we discuss this further to ensure we have a clear understanding of the topic at hand?"
