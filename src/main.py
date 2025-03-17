@@ -12,7 +12,11 @@ This module provides a set of NLP tools for:
 It uses a combination of local models and LangChain tools to process text in various languages.
 """
 
+# 禁用TensorFlow的oneDNN警告消息
 import os
+os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'  
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'  # 只显示错误信息
+
 import sys
 import re
 import time
@@ -32,16 +36,22 @@ from transformers import (
 from langchain_core.prompts import PromptTemplate
 from langchain_ollama import ChatOllama
 
-# Set environment variables to disable TensorFlow oneDNN optimization and warning messages
-os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'  # 0=all messages, 1=INFO, 2=WARNING, 3=ERROR
-
 # Ignore TensorFlow warnings
 warnings.filterwarnings('ignore', category=Warning)
 
 # Import from our modules
 from src.data_processor import process_sentiment_dataset, process_toxicity_dataset
 from src import config
+from src import models, utils, analysis  # 导入必要的模块
+
+# 确保目录存在
+def ensure_directories():
+    """Create required directories if they don't exist"""
+    os.makedirs("output", exist_ok=True)
+    os.makedirs("models", exist_ok=True)
+
+# 先创建必要的目录
+ensure_directories()
 
 # Setup logging
 logging.basicConfig(
@@ -56,12 +66,6 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-def ensure_directories():
-    """Create required directories if they don't exist"""
-    os.makedirs("output", exist_ok=True)
-    os.makedirs("models", exist_ok=True)
-
-
 def main():
     """
     Main function to run the NLP processing pipeline.
@@ -70,8 +74,24 @@ def main():
     logger.info("Starting NLP processing pipeline")
     
     try:
-        # Ensure directories exist
-        ensure_directories()
+        # 目录已在程序开始时创建，此处无需重复调用
+        # ensure_directories()
+        
+        # 加载模型（这是之前缺少的关键步骤）
+        logger.info("Loading NLP models...")
+        (
+            utils.lang_detector, 
+            utils.translation_tokenizer, utils.translation_model,
+            analysis.analysis_tokenizer, analysis.analysis_model,
+            _
+        ) = models.load_models()
+        logger.info("Models loaded successfully")
+        
+        # Check for model files
+        model_files = {
+            "lang_detector": os.path.join("models", "lid.176.bin"),
+            "analysis_model": os.path.join("models", "analysis_model")
+        }
         
         # Process datasets with progress tracking
         with tqdm(total=2, desc="Processing datasets", unit="dataset") as dataset_pbar:
@@ -85,8 +105,8 @@ def main():
             sentiment_df = process_sentiment_dataset(config.SENTIMENT_INPUT, config.SENTIMENT_OUTPUT)
             logger.info(f"Sentiment analysis complete. Results saved to {config.SENTIMENT_OUTPUT}")
             dataset_pbar.update(1)
-            
-            # Process toxicity dataset
+    
+    # Process toxicity dataset
             dataset_pbar.set_description("Processing toxicity dataset")
             logger.info(f"Processing toxicity dataset: {config.TOXICITY_INPUT}")
             if not os.path.exists(config.TOXICITY_INPUT):
