@@ -19,11 +19,16 @@ TRANSLATION_MODEL_PATH = "UBC-NLP/toucan-base"
 GRANITE_MODEL_PATH = "ibm-granite/granite-3.0-2b-instruct"
 OLLAMA_MODEL_NAME = "llama3.2:1b"
 
+# Enable fallback to Ollama when transformers model fails
+ENABLE_OLLAMA_FALLBACK = True
+OLLAMA_HOST = "http://localhost:11434"  # Default Ollama API endpoint
+
 # Task types
 VALID_TASKS = ["toxic", "sentiment", "detoxic"]
 
 # Execution parameters
 MAX_RETRIES = 100
+MAX_PROCESS_RETRIES = 10  # Increased from 5 to 10 for more retries before fallback
 MAX_ITERATIONS = 5
 RANDOM_DELAY_RANGE = (0, 2)
 
