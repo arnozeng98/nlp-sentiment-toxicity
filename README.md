@@ -23,11 +23,14 @@ nlp-sentiment-toxicity/
 │   ├── main.py            # Entry point
 │   ├── config.py          # Configuration settings
 │   ├── models.py          # Model loading utilities
-│   ├── utils.py           # Language detection and translation
+│   ├── language_utils.py  # Language detection and translation
+│   ├── text_processor.py  # Text processing and batch handling
+│   ├── data_processor.py  # Data processing functions
 │   ├── analysis.py        # Core analysis functions
 │   ├── sentiment.py       # Sentiment analysis module
 │   ├── toxicity.py        # Toxicity detection and detoxification
-│   └── processing.py      # Text preprocessing and batch processing
+│   ├── processing.py      # Text preprocessing and rule-based processing
+│   └── output_parser.py   # Output parsing and fixing
 │
 ├── tests/                 # Test modules
 │   ├── __init__.py        # Test package initialization
@@ -170,6 +173,15 @@ Key configuration settings can be adjusted in `src/config.py`, including:
 - GPU acceleration is strongly recommended for optimal performance
 - The system includes caching to avoid reprocessing identical texts
 - Adaptive prompting improves reliability with large language models
+- Direct function implementations ensure independence between sentiment and toxicity analysis
+
+## New Features and Improvements
+
+- **Enhanced Sentiment Analysis**: Improved sentiment analysis templates and output parsing to avoid confusion with toxicity analysis
+- **Optimized Toxicity Detection**: Added direct function implementations for better toxicity detection accuracy
+- **Improved Detoxification**: Using specialized direct functions for more effective text detoxification
+- **Better Logging**: Enhanced logging functionality including test run logs
+- **Improved Error Handling**: Better error handling and fallback mechanisms
 
 ## Troubleshooting
 
