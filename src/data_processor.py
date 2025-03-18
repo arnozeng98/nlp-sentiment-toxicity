@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 """
-Data processing module for handling different data formats
+Dataset processing module for handling input/output data formats and transformations
 """
 
 import os
@@ -10,7 +10,7 @@ import pandas as pd
 from tqdm import tqdm
 from typing import List, Dict, Any, Optional, Tuple
 
-from src.processing import preprocess_text, batch_process_texts
+from src.text_processor import preprocess_text, batch_process_texts
 
 # Setup logging - default to INFO, can be overridden
 logger = logging.getLogger(__name__)
