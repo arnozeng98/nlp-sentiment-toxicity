@@ -24,10 +24,10 @@ sys.path.append(root_dir)
 
 from src import config
 from src import models
-from src import utils
+from src import language_utils
 from src import analysis
 from src import sentiment
-from src.processing import preprocess_text, batch_process_texts
+from src.text_processor import preprocess_text, batch_process_texts
 
 # Import test configuration - use relative import
 from test_config import (
@@ -95,10 +95,35 @@ def test_sentiment_analysis():
     # Create results dataframe
     results_df = pd.DataFrame(sentiment_results)
     
+    # Extract values from nested output structure
+    extracted_results = []
+    for result in sentiment_results:
+        if isinstance(result, dict):
+            if "output" in result and isinstance(result["output"], dict):
+                # New structure: {"original_text": "...", "output": {"label": "...", "explanation": "..."}}
+                output = result["output"]
+                extracted_results.append({
+                    "original_text": result.get("original_text", ""),
+                    "label": output.get("label", "unknown"),
+                    "explanation": output.get("explanation", "No explanation provided.")
+                })
+            elif "label" in result and "explanation" in result:
+                # Old structure: {"label": "...", "explanation": "..."}
+                extracted_results.append(result)
+            else:
+                # Fallback for unknown structure
+                extracted_results.append({
+                    "label": "unknown",
+                    "explanation": "Failed to parse result structure."
+                })
+    
+    # Create a new dataframe with the extracted values
+    extracted_df = pd.DataFrame(extracted_results)
+    
     # Merge with original dataframe to match standard format
     merged_df = pd.merge(
         test_df,
-        results_df,
+        extracted_df,
         left_index=True,
         right_index=True
     )
@@ -148,8 +173,8 @@ def initialize_models():
     """Initialize models needed for testing"""
     logger.info("Loading models for testing...")
     (
-        utils.lang_detector, 
-        utils.translation_tokenizer, utils.translation_model,
+        language_utils.lang_detector, 
+        language_utils.translation_tokenizer, language_utils.translation_model,
         analysis.analysis_tokenizer, analysis.analysis_model,
         _
     ) = models.load_models()

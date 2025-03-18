@@ -17,13 +17,13 @@ TEST_SENTIMENT_DATA = [
     "The new update has improved performance significantly."
 ]
 
-# Test data for toxicity analysis
+# Test data for toxicity analysis - using first 5 samples from the original dataset
 TEST_TOXICITY_DATA = [
-    "You're an idiot and nobody likes you!",
-    "I respectfully disagree with your opinion on this matter.",
-    "Shut up and go back to where you came from!",
-    "Thank you for sharing your perspective, I appreciate it.",
-    "This post is full of lies and misinformation, you're stupid."
+    "I know he's an idiot I think he might of been held back a year in school then again Texans aren't really smart or average for that matter.",
+    "==my butthole==  i love buttholes. they taste mmm goood. i will never stop vandalizing wikipedia. u no why?  cuz u dont tell me wat to do. k bye i hate you",
+    "This is absolute bullshit! We fucking knew this shit was going down. Now we damn well need to fucking dig into those fucking voting machines 'cause I'm goddamn sure Trump ain't fucking lying about that fucking voter fraud!",
+    "\"Moochelle Nobama takes swipe at Trump it sez. Trump better look out, apes have a long reach.\"",
+    "2. 	> Lol, I guessed IPN (the Institue of National Remembrance) was going to be mentioned  From what I understood from their message on IPN's page, they actually went after that cunt that modified the trailer (and has two more cunty videos on his channel), not after the actual game itself.  The journalists however - especially the rightwing ones - seen IPN's message and went after everything. No surprise there, lol.  >  Germans are the last people who would make that mistake with the phrasing.  You would think so. Sadly, you would be wrong.  - http://wyborcza.pl/1,76842,6928930,_Polish_Camps__in_Polish_Court.html - https://fakty.interia.pl/news-byly-wiezien-auschwitz-skarzy-zdf-za-polskie-obozy,nId,999725"
 ]
 
 # Output file paths with timestamps
@@ -50,13 +50,27 @@ def setup_test_logging():
     # Create handlers
     c_handler = logging.StreamHandler()
     
+    # Create logs directory if it doesn't exist
+    logs_dir = os.path.join(test_output_dir, "logs")
+    if not os.path.exists(logs_dir):
+        os.makedirs(logs_dir)
+    
+    # Create a file handler with timestamp
+    log_file_name = os.path.join(logs_dir, f"test_run_{timestamp}.log")
+    f_handler = logging.FileHandler(log_file_name)
+    
     # Create formatters
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     
     # Add formatters to handlers
     c_handler.setFormatter(formatter)
+    f_handler.setFormatter(formatter)
     
     # Add handlers to logger
     logger.addHandler(c_handler)
+    logger.addHandler(f_handler)
+    
+    # Log the log file location
+    logger.info(f"Logging to file: {log_file_name}")
     
     return logger 
