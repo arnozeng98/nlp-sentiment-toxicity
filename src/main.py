@@ -12,10 +12,10 @@ This module provides a set of NLP tools for:
 It uses a combination of local models and LangChain tools to process text in various languages.
 """
 
-# 禁用TensorFlow的oneDNN警告消息
+# Disable TensorFlow oneDNN warning messages
 import os
 os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'  
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'  # 只显示错误信息
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'  # Only show error messages
 
 import sys
 import re
@@ -42,15 +42,15 @@ warnings.filterwarnings('ignore', category=Warning)
 # Import from our modules
 from src.data_processor import process_sentiment_dataset, process_toxicity_dataset
 from src import config
-from src import models, utils, analysis  # 导入必要的模块
+from src import models, language_utils, analysis  # Import necessary modules
 
-# 确保目录存在
+# Ensure directories exist
 def ensure_directories():
     """Create required directories if they don't exist"""
     os.makedirs("output", exist_ok=True)
     os.makedirs("models", exist_ok=True)
 
-# 先创建必要的目录
+# Create necessary directories first
 ensure_directories()
 
 # Setup logging
@@ -74,14 +74,14 @@ def main():
     logger.info("Starting NLP processing pipeline")
     
     try:
-        # 目录已在程序开始时创建，此处无需重复调用
+        # Directories already created at program start, no need to call again
         # ensure_directories()
         
-        # 加载模型（这是之前缺少的关键步骤）
+        # Load models (critical step that was missing before)
         logger.info("Loading NLP models...")
         (
-            utils.lang_detector, 
-            utils.translation_tokenizer, utils.translation_model,
+            language_utils.lang_detector, 
+            language_utils.translation_tokenizer, language_utils.translation_model,
             analysis.analysis_tokenizer, analysis.analysis_model,
             _
         ) = models.load_models()
