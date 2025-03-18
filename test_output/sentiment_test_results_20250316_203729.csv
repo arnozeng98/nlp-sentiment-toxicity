@@ -1,6 +1,0 @@
-"sentence_id","sentence","class-label","predicted-label","explanation"
-"1","I really enjoyed this movie, it was fantastic!","positive","positive","It expresses strong satisfaction with the movie."
-"2","The service at this restaurant was terrible and the food was cold.","negative","negative","It expresses strong dissatisfaction with the service and the food quality. The use of words like 'terrible' and 'cold' indicate a negative experience."
-"3","The product works fine but the packaging was damaged.","mixed","negative","It expresses dissatisfaction with the packaging, which suggests a negative experience overall."
-"4","This is absolutely the worst experience I've ever had.","neutral","negative","It expresses strong dissatisfaction with the experience. The use of the word 'worst' and the phrase 'absolutely the worst' indicate a negative sentiment."
-"5","The new update has improved performance significantly.","negative","positive","It expresses satisfaction with the new update's performance improvement."
