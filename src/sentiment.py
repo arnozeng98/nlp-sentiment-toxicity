@@ -11,7 +11,7 @@ from langchain_core.prompts import PromptTemplate
 
 from src import config
 from src import analysis
-from src.processing import batch_process_texts, preprocess_text
+from src.text_processor import batch_process_texts, preprocess_text
 from src.data_processor import process_sentiment_dataset
 
 # Setup logging
@@ -28,18 +28,8 @@ def analyze_sentiment(sentence: str) -> dict:
     Returns:
         dict: Analysis results with sentiment label (positive/negative/mixed) and explanation
     """
-    # Use the improved template from analysis module
-    sentiment_prompt_template = PromptTemplate(
-        input_variables=["sentence"],
-        template=analysis.SENTIMENT_BASE_TEMPLATE
-    )
-    
-    return analysis.analyze_text(
-        sentence, 
-        sentiment_prompt_template, 
-        r"The sentence is\s+(positive|negative|mixed)\b",
-        task_type="sentiment"
-    )
+    # Use the direct sentiment analysis function for better extraction
+    return analysis.analyze_sentiment_direct(sentence)
 
 # Note: The process_sentiment_dataset function is now imported from data_processor
 # and only kept here for backwards compatibility 
