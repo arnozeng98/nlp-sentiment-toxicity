@@ -1,0 +1,28 @@
+2025-03-18 10:24:34,002 - test - INFO - Logging to file: C:\Users\ArnoZ\Desktop\repos\nlp-sentiment-toxicity\test_output\logs\test_run_20250318_102434.log
+2025-03-18 10:24:34,002 - test - INFO - Loading models for testing...
+2025-03-18 10:24:40,131 - test - INFO - Models loaded successfully
+2025-03-18 10:24:40,133 - test - INFO - Starting test for test_toxicity_analysis
+2025-03-18 10:24:40,133 - test - INFO - Test dataframe has columns: ['data_id', 'sample_id', 'text', 'source_label', 'platform']
+2025-03-18 10:24:40,134 - test - INFO - Preprocessing test data...
+2025-03-18 10:24:40,135 - test - INFO - Preprocessed 5 texts for toxicity test
+2025-03-18 10:24:40,135 - test - INFO - Testing toxicity detection...
+2025-03-18 10:28:39,876 - test - INFO - Testing detoxification using rule-based approach...
+2025-03-18 10:28:39,881 - test - WARNING - Rule-based detoxification failed for text 4
+2025-03-18 10:28:39,882 - test - INFO - Completed toxicity analysis with 5 results
+2025-03-18 10:28:39,900 - test - INFO - Saved toxicity test results to C:\Users\ArnoZ\Desktop\repos\nlp-sentiment-toxicity\test_output\toxicity_test_results_20250318_102434.csv
+2025-03-18 10:28:39,900 - test - INFO - 
+--- TEST RESULTS SUMMARY ---
+2025-03-18 10:28:39,901 - test - INFO -   toxic: 5 texts
+2025-03-18 10:28:39,901 - test - INFO - --- SAMPLE RESULTS ---
+2025-03-18 10:28:39,901 - test - INFO - Result 1: Text: 'I know he's an idiot I think h...' | Ground truth: toxic | Predicted: toxic
+2025-03-18 10:28:39,901 - test - INFO -   Detoxified: 'I know he's an uninformed person I think he might ...'
+2025-03-18 10:28:39,902 - test - INFO - Result 2: Text: '==my butthole==  i love buttho...' | Ground truth: toxic | Predicted: toxic
+2025-03-18 10:28:39,902 - test - INFO -   Detoxified: '==my behind==  i love buttholes. they taste mmm go...'
+2025-03-18 10:28:39,902 - test - INFO - Result 3: Text: 'This is absolute bullshit! We ...' | Ground truth: non-toxic | Predicted: toxic
+2025-03-18 10:28:39,903 - test - INFO -   Detoxified: 'This is absolute nonsense! We very knew this stuff...'
+2025-03-18 10:28:39,903 - test - INFO - Result 4: Text: ''Moochelle Nobama takes swipe ...' | Ground truth: toxic | Predicted: toxic
+2025-03-18 10:28:39,903 - test - INFO -   Detoxified: 'Michelle Obama commented about Trump according to ...'
+2025-03-18 10:28:39,903 - test - INFO - Result 5: Text: '2. 	> Lol, I guessed IPN (the ...' | Ground truth: toxic | Predicted: toxic
+2025-03-18 10:28:39,903 - test - INFO -   Detoxified: '2. 	> Lol, I guessed IPN (the Institue of National...'
+2025-03-18 10:28:39,903 - test - INFO - Test test_toxicity_analysis completed successfully in 239.77 seconds
+2025-03-18 10:28:39,903 - test - INFO - All toxicity tests completed successfully!

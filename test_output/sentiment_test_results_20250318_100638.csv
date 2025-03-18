@@ -1,0 +1,6 @@
+"sentence_id","sentence","class-label","predicted-label","explanation"
+"1","I really enjoyed this movie, it was fantastic!","positive","positive","It conveys a positive sentiment towards the movie, using words like 'enjoyed' and 'fantastic' that indicate a favorable opinion.'"
+"2","The service at this restaurant was terrible and the food was cold.","negative","negative","It expresses dissatisfaction with the service and food quality, using words like 'terrible' and 'cold' that indicate negative sentiment.'"
+"3","The product works fine but the packaging was damaged.","mixed","mixed","It expresses a positive sentiment about the product's functionality, but a negative sentiment about the damaged packaging. The overall tone is somewhat negative due to the packaging issue, despite the positive comment about the product.'"
+"4","This is absolutely the worst experience I've ever had.","neutral","negative","It expresses strong dissatisfaction and negative emotion, using words like 'worst experience' and 'ever had' that indicate a negative sentiment.'"
+"5","The new update has improved performance significantly.","negative","positive","It conveys satisfaction and improvement, using words like'significantly' and 'improved' that suggest a positive sentiment.'"

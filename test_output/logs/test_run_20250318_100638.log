@@ -1,0 +1,23 @@
+2025-03-18 10:06:38,878 - test - INFO - Logging to file: C:\Users\ArnoZ\Desktop\repos\nlp-sentiment-toxicity\test_output\logs\test_run_20250318_100638.log
+2025-03-18 10:06:38,879 - test - INFO - Loading models for testing...
+2025-03-18 10:06:45,802 - test - INFO - Models loaded successfully
+2025-03-18 10:06:45,803 - test - INFO - Starting test for test_sentiment_analysis
+2025-03-18 10:06:45,805 - test - INFO - Test dataframe has columns: ['sentence_id', 'sentence', 'class-label']
+2025-03-18 10:06:45,805 - test - INFO - Preprocessing test data...
+2025-03-18 10:06:45,806 - test - INFO - Preprocessed 5 texts for sentiment test
+2025-03-18 10:06:45,815 - test - INFO - Running sentiment analysis...
+2025-03-18 10:08:58,344 - test - INFO - Completed sentiment analysis with 5 results
+2025-03-18 10:08:58,349 - test - INFO - Saved sentiment test results to C:\Users\ArnoZ\Desktop\repos\nlp-sentiment-toxicity\test_output\sentiment_test_results_20250318_100638.csv
+2025-03-18 10:08:58,350 - test - INFO - 
+--- TEST RESULTS SUMMARY ---
+2025-03-18 10:08:58,350 - test - INFO -   positive: 2 texts
+2025-03-18 10:08:58,350 - test - INFO -   negative: 2 texts
+2025-03-18 10:08:58,351 - test - INFO -   mixed: 1 texts
+2025-03-18 10:08:58,351 - test - INFO - --- SAMPLE RESULTS ---
+2025-03-18 10:08:58,351 - test - INFO - Result 1: Text: 'I really enjoyed this movie, i...' | Ground truth: positive | Predicted: positive
+2025-03-18 10:08:58,351 - test - INFO - Result 2: Text: 'The service at this restaurant...' | Ground truth: negative | Predicted: negative
+2025-03-18 10:08:58,352 - test - INFO - Result 3: Text: 'The product works fine but the...' | Ground truth: mixed | Predicted: mixed
+2025-03-18 10:08:58,352 - test - INFO - Result 4: Text: 'This is absolutely the worst e...' | Ground truth: neutral | Predicted: negative
+2025-03-18 10:08:58,352 - test - INFO - Result 5: Text: 'The new update has improved pe...' | Ground truth: negative | Predicted: positive
+2025-03-18 10:08:58,352 - test - INFO - Test test_sentiment_analysis completed successfully in 132.55 seconds
+2025-03-18 10:08:58,352 - test - INFO - All sentiment tests completed successfully!
