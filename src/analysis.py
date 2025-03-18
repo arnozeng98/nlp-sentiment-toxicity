@@ -21,76 +21,52 @@ analysis_model = None
 
 # Improved prompt templates with clear formatting instructions
 SENTIMENT_BASE_TEMPLATE = """
-Question: Analyze the sentiment of the following text and classify it as positive, negative, or mixed.
-
-TEXT: "{sentence}"
-
-INSTRUCTIONS:
-1. Consider the overall emotion, tone, and content.
-2. Classify as:
-   - "positive" if it expresses positive emotions, approval, or satisfaction
-   - "negative" if it expresses negative emotions, complaints, or dissatisfaction
-   - "mixed" if it contains both positive and negative elements
-3. IMPORTANT: The output MUST follow exactly this format:
-   "The sentence is [CLASSIFICATION]. [YOUR BRIEF EXPLANATION]"
-4. Do NOT include any ending markers like "END OF ANALYSIS" or similar phrases.
-5. Do NOT include any additional formatting or metadata in your response.
-
-EXAMPLES:
-Example 1: "I love this product but it's expensive."
-Response: The sentence is mixed. It expresses positive feelings about the product but negative feelings about the price.
-
-Example 2: "This is the worst service ever!"
-Response: The sentence is negative. It expresses strong dissatisfaction with the service.
-
-START YOUR ANALYSIS:
+Question: Explain why the following sentence is classified as toxic or non-toxic: {sentence}.
+Please give me your class: toxic or non-toxic and provide your explanation within 50 words as followed sructure:
+'The sentence is ...(toxic or non-toxic). ...(your explanation)'
 """
 
 TOXICITY_BASE_TEMPLATE = """
-Question: Determine if the following text is toxic or non-toxic: "{sentence}"
-
-INSTRUCTIONS:
-1. Analyze the text for offensive, harmful, or inappropriate content.
-2. Classify as:
-   - "toxic" if it contains hate speech, insults, threats, obscenity, or other harmful content
-   - "non-toxic" if it is respectful, appropriate, and free from harmful content
-
-FORMAT YOUR RESPONSE EXACTLY AS FOLLOWS:
-"The sentence is [CLASSIFICATION]. [YOUR BRIEF EXPLANATION]"
-
-EXAMPLES:
-Example 1: "You're so stupid, I hate you!"
-Response: The sentence is toxic. It contains a direct insult and expresses hatred.
-
-Example 2: "I disagree with your opinion on this matter."
-Response: The sentence is non-toxic. It expresses disagreement in a respectful way.
-
-YOUR ANALYSIS:
+Question: Explain why the following sentence is classified as toxic or non-toxic: {sentence}.
+Please give me your class: toxic or non-toxic and provide your explanation within 50 words as followed sructure:
+'The sentence is ...(toxic or non-toxic). ...(your explanation)'
 """
 
 DETOXIFY_BASE_TEMPLATE = """
-Question: First determine if the following text is toxic, then rewrite it in a polite and non-toxic way: "{sentence}"
+Transform this potentially toxic text into a non-toxic, respectful version.
 
-INSTRUCTIONS:
-1. First analyze if the text is toxic or non-toxic.
-2. If toxic, rewrite it to convey a similar message but in a respectful, constructive manner.
-3. If non-toxic, indicate that no rewriting is necessary.
+Original text: {sentence}
 
-FORMAT YOUR RESPONSE EXACTLY AS FOLLOWS:
-First: "The sentence is [toxic/non-toxic]. [Brief explanation]"
-Then (only if toxic): "The non-toxic way is: '[your rewritten text]'"
+KEY OBJECTIVES:
+1. COMPLETELY remove all profanity, slurs, insults, and offensive language
+2. Replace derogatory terms with appropriate, respectful alternatives
+3. Maintain the core message while eliminating harmful content
+4. For racial/ethnic slurs, use appropriate group descriptors (e.g., "Black person" vs. offensive terms)
+5. For sexist/gendered insults, remove the gendered component completely
+6. If sexual content is inappropriate, summarize the message without explicit details
 
-EXAMPLES:
-Example 1: "You're so stupid, I hate you!"
-Response: 
-The sentence is toxic. It contains a direct insult and expresses hatred.
-The non-toxic way is: "I strongly disagree with your approach and am feeling frustrated with our interaction."
+Your response MUST be in this format:
+"Rewritten text: [your detoxified version]"
 
-Example 2: "I disagree with your opinion on this matter."
-Response:
-The sentence is non-toxic. It expresses disagreement in a respectful way.
+Examples:
 
-YOUR ANALYSIS:
+Example 1:
+Original: "This f***ing idiot doesn't know what they're talking about."
+Rewritten text: This person appears to be misinformed about the topic.
+
+Example 2: 
+Original: "She's such a b*tch for not replying to my texts."
+Rewritten text: I'm disappointed she hasn't responded to my messages yet.
+
+Example 3:
+Original: "That's so retarded, only complete morons would believe this garbage."
+Rewritten text: That information seems inaccurate, and it's unfortunate some people might believe it.
+
+Example 4:
+Original: "These immigrants are animals who don't belong in our country."
+Rewritten text: I have concerns about immigration policy that I'd like to discuss respectfully.
+
+IMPORTANT: If the text contains violent threats, hate speech, or extremely offensive content, consider more substantial rewording rather than simple word substitutions.
 """
 
 def analyze_text(
@@ -115,6 +91,10 @@ def analyze_text(
     Returns:
         dict: Analysis results including label and explanation
     """
+    # Increase temperature for detoxification to encourage creativity
+    if task_type == "detoxic":
+        temperature = max(0.85, temperature)  # Ensure minimum of 0.85 for detoxification
+    
     # Check cache first (moved from batch processing to here)
     from src.output_parser import check_result_cache, add_to_result_cache, validate_output
     cached_result = check_result_cache(sentence, task_type)
